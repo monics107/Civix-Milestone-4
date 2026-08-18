@@ -1,0 +1,83 @@
+<div class="page-container">
+  <section class="admin-hero">
+    <div class="hero-copy">
+      <div class="hero-title"><mat-icon>admin_panel_settings</mat-icon><h1>Super Admin Console</h1></div>
+      <p>Manage officials, citizens, departments, categories, and platform activity.</p>
+    </div>
+    <button mat-raised-button class="hero-button" (click)="load()"><mat-icon>refresh</mat-icon> Refresh</button>
+  </section>
+
+  <section class="card-grid" aria-label="Admin statistics">
+    <div class="stat-card blue"><span class="stat-icon"><mat-icon>people</mat-icon></span><div><strong>{{stats.citizens||0}}</strong><span>Citizens</span></div></div>
+    <div class="stat-card green"><span class="stat-icon"><mat-icon>badge</mat-icon></span><div><strong>{{stats.officials||0}}</strong><span>Officials</span></div></div>
+    <div class="stat-card orange"><span class="stat-icon"><mat-icon>pending_actions</mat-icon></span><div><strong>{{stats.pendingOfficials||0}}</strong><span>Pending Verification</span></div></div>
+    <div class="stat-card purple"><span class="stat-icon"><mat-icon>business</mat-icon></span><div><strong>{{stats.departments||0}}</strong><span>Departments</span></div></div>
+  </section>
+
+  <section class="management-grid">
+    <mat-card class="manage-card" id="departments">
+      <header><div><h2>Departments</h2><p>Add and deactivate civic departments.</p></div><span>{{departments.length}} active</span></header>
+      <div class="add-row">
+        <mat-form-field appearance="outline"><mat-label>Department name</mat-label><input matInput [(ngModel)]="newDepartmentName"></mat-form-field>
+        <button mat-raised-button color="primary" (click)="createDepartment()" [disabled]="!newDepartmentName.trim()"><mat-icon>add</mat-icon>Add</button>
+      </div>
+      <div class="chip-list">@for(d of departments; track d.id){<span class="admin-chip"><mat-icon>business</mat-icon>{{d.name}}<button mat-icon-button (click)="deactivateDepartment(d)" aria-label="Deactivate department"><mat-icon>close</mat-icon></button></span>}</div>
+    </mat-card>
+
+    <mat-card class="manage-card" id="categories">
+      <header><div><h2>Categories</h2><p>Maintain category labels used by petitions and reports.</p></div><span>{{categories.length}} total</span></header>
+      <div class="add-row">
+        <mat-form-field appearance="outline"><mat-label>Category name</mat-label><input matInput [(ngModel)]="newCategoryName"></mat-form-field>
+        <button mat-raised-button color="primary" (click)="addCategory()" [disabled]="!newCategoryName.trim()"><mat-icon>add</mat-icon>Add</button>
+      </div>
+      <div class="chip-list">@for(category of categories; track category){<span class="admin-chip category"><mat-icon>category</mat-icon>{{category}}<button mat-icon-button (click)="removeCategory(category)" aria-label="Remove category"><mat-icon>close</mat-icon></button></span>}</div>
+    </mat-card>
+  </section>
+
+  <div class="section-heading"><div><h2>Pending Officials</h2><p>Review new official accounts and assign department access.</p></div><span class="count-badge">{{pending.length}} pending</span></div>
+  <div class="admin-table pending-table">
+    <div class="table-header"><span>Official</span><span>Location</span><span>Assignment</span><span>Action</span></div>
+    @for(u of pending; track u.id){
+      <div class="table-row">
+        <span><b>{{u.name}}</b><small>{{u.email}}</small></span>
+        <span>{{u.location}}</span>
+        <span class="assignment-fields"><mat-form-field appearance="outline"><mat-select [(ngModel)]="selectedDepartment[u.id]" placeholder="Department"><mat-option value="">Select</mat-option>@for(d of departments;track d.id){<mat-option [value]="d.name">{{d.name}}</mat-option>}</mat-select></mat-form-field><mat-form-field appearance="outline"><input matInput placeholder="Designation" [(ngModel)]="designation[u.id]"></mat-form-field></span>
+        <span class="row-actions"><button mat-raised-button color="primary" (click)="approve(u)" [disabled]="!selectedDepartment[u.id]">Approve</button><button mat-stroked-button color="warn" (click)="reject(u)">Reject</button></span>
+      </div>
+    }
+    @if(!pending.length){<div class="empty-state"><mat-icon>verified_user</mat-icon><strong>All caught up</strong><span>No officials are waiting for verification.</span></div>}
+  </div>
+
+  <div class="section-heading" id="officials"><div><h2>Officials Directory</h2><p>All official accounts with department, designation, and account status.</p></div><span class="count-badge neutral">{{officials.length}} total</span></div>
+  <div class="admin-table officials-table">
+    <div class="table-header"><span>Official</span><span>Department</span><span>Designation</span><span>Location</span><span>Status</span><span>Action</span></div>
+    @for(u of visibleOfficials; track u.id){
+      <div class="table-row">
+        <span><b>{{u.name}}</b><small>{{u.email}}</small></span>
+        <span>{{u.department || 'Not assigned'}}</span>
+        <span>{{u.designation || 'Not assigned'}}</span>
+        <span>{{u.location}}</span>
+        <span><span class="status-pill" [class.inactive]="!u.active">{{u.verified ? 'Verified' : 'Pending'}} | {{u.active ? 'Active' : 'Inactive'}}</span></span>
+        <span class="row-actions"><button mat-stroked-button (click)="toggle(u)">{{u.active ? 'Deactivate' : 'Activate'}}</button></span>
+      </div>
+    }
+    @if(!officials.length){<div class="empty-state compact"><mat-icon>badge</mat-icon><span>No officials found.</span></div>}
+  </div>
+
+  @if(officialPages > 1){<div class="pager"><button mat-stroked-button (click)="officialPage = officialPage - 1" [disabled]="officialPage === 0"><mat-icon>chevron_left</mat-icon></button><span>Page {{officialPage + 1}} of {{officialPages}}</span><button mat-stroked-button (click)="officialPage = officialPage + 1" [disabled]="officialPage + 1 >= officialPages"><mat-icon>chevron_right</mat-icon></button></div>}
+  <div class="section-heading" id="citizens"><div><h2>Citizens Directory</h2><p>All registered citizen accounts with location, status, and registration date.</p></div><span class="count-badge neutral">{{citizens.length}} total</span></div>
+  <div class="admin-table citizens-table">
+    <div class="table-header"><span>Citizen</span><span>Location</span><span>Status</span><span>Registered</span></div>
+    @for(u of visibleCitizens; track u.id){
+      <div class="table-row">
+        <span><b>{{u.name}}</b><small>{{u.email}}</small></span>
+        <span>{{u.location}}</span>
+        <span><span class="status-pill" [class.inactive]="!u.active">{{u.active ? 'Active' : 'Inactive'}}</span></span>
+        <span>{{u.createdAt ? (u.createdAt | date:'mediumDate') : 'Not available'}}</span>
+        <span class="row-actions"><button mat-stroked-button (click)="toggleCitizen(u)">{{u.active ? 'Deactivate' : 'Activate'}}</button></span>
+      </div>
+    }
+    @if(!citizens.length){<div class="empty-state compact"><mat-icon>people</mat-icon><span>No citizens found.</span></div>}
+  </div>
+  @if(citizenPages > 1){<div class="pager"><button mat-stroked-button (click)="citizenPage = citizenPage - 1" [disabled]="citizenPage === 0"><mat-icon>chevron_left</mat-icon></button><span>Page {{citizenPage + 1}} of {{citizenPages}}</span><button mat-stroked-button (click)="citizenPage = citizenPage + 1" [disabled]="citizenPage + 1 >= citizenPages"><mat-icon>chevron_right</mat-icon></button></div>}
+</div>

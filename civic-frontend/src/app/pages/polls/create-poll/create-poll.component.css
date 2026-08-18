@@ -1,0 +1,469 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.create-poll-page {
+  background: #eef5f7;
+}
+
+.create-poll-page {
+  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 34px 32px 46px 32px;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 132px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -34px 0 auto 0;
+  width: 100%;
+  max-width: 100%;
+  height: 245px;
+  background:
+    radial-gradient(
+      circle at 78% 20%,
+      rgba(255, 255, 255, 0.9) 0 2px,
+      transparent 3px
+    ) 0 0 / 18px 18px,
+    radial-gradient(
+      ellipse at 85% 50%,
+      #e6f0ff 0 20%,
+      transparent 20.5%
+    ),
+    linear-gradient(120deg, #f8fbff 15%, #e8f2ff 100%);
+  pointer-events: none;
+}
+
+.header-illustration {
+  width: 112px;
+  height: 112px;
+  min-width: 112px;
+  flex: 0 0 112px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, #6947ea, #2767db);
+  box-shadow: 0 12px 24px rgba(65, 70, 205, 0.24);
+}
+
+.header-illustration > mat-icon {
+  width: 54px;
+  height: 54px;
+  font-size: 54px;
+}
+
+.header-illustration .header-chart {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 26px;
+  height: 26px;
+  font-size: 26px;
+  color: #ffce69;
+}
+
+.page-header h1 {
+  min-width: 0;
+  margin: 0;
+  color: #102a59;
+  font-size: clamp(30px, 4vw, 38px);
+  line-height: 1.1;
+  font-weight: 750;
+  overflow-wrap: break-word;
+}
+
+.page-header p {
+  margin: 9px 0 0;
+  color: #65718d;
+  font-size: 17px;
+}
+
+/* =========================
+   FORM CARD
+========================= */
+
+.form-card {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 32px 30px 30px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #dfe5f0;
+  border-radius: 17px;
+  box-shadow: 0 12px 30px rgba(34, 60, 112, 0.12);
+  overflow: hidden;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  gap: 20px;
+}
+
+/* =========================
+   TOP FIELDS
+========================= */
+
+.top-fields,
+.details-fields {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 26px;
+  grid-template-columns:
+    minmax(0, 1.08fr)
+    minmax(0, 0.92fr);
+}
+
+mat-form-field {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* =========================
+   OPTIONS SECTION
+========================= */
+
+.options-section {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding-top: 20px;
+  border-top: 1px solid #dce2ed;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  min-width: 0;
+}
+
+.section-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 41px;
+  width: 41px;
+  height: 41px;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, #3166e4, #7d48e8);
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: #142959;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.section-heading p {
+  margin: 3px 0 0;
+  color: #6d7893;
+  font-size: 14px;
+}
+
+/* =========================
+   OPTION LIST
+========================= */
+
+.option-list {
+  display: grid;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  gap: 12px;
+}
+
+.option-row {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns:
+    48px
+    minmax(0, 1fr)
+    72px;
+  align-items: start;
+  gap: 16px;
+}
+
+.option-row mat-form-field {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.option-number {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 48px;
+  border-radius: 9px;
+  color: #3d45d6;
+  font-weight: 700;
+  background: linear-gradient(135deg, #edeaff, #f7f7ff);
+}
+
+.remove-option {
+  width: 72px;
+  max-width: 100%;
+  height: 48px;
+  border: 1px solid #fecfd1;
+  border-radius: 9px;
+  color: #ee3540;
+  background: #fff7f7;
+}
+
+.remove-option:hover:not([disabled]) {
+  background: #ffeaeb;
+}
+
+.remove-option[disabled] {
+  color: #c4cad8;
+  border-color: #e6e9f0;
+  background: #f8f9fb;
+}
+
+.add-option {
+  width: 100%;
+  max-width: 100%;
+  height: 44px;
+  margin-top: 14px;
+  border-style: dashed;
+  border-color: #9dacff;
+  color: #254edb;
+  background: #fafbff;
+}
+
+/* =========================
+   DETAILS
+========================= */
+
+.details-fields {
+  margin-top: 2px;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+}
+
+/* =========================
+   FORM ACTIONS
+========================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding-top: 8px;
+}
+
+.form-actions button {
+  height: 48px;
+  max-width: 100%;
+  border-radius: 9px;
+  font-weight: 650;
+}
+
+.form-actions button[mat-button] {
+  min-width: 142px;
+  color: #485470;
+  background: #f0f2f7;
+}
+
+.form-actions button[mat-raised-button] {
+  min-width: 188px;
+  color: #fff;
+  background: linear-gradient(100deg, #2762dd, #7745e9);
+  box-shadow: none;
+}
+
+.form-actions mat-icon {
+  margin-right: 7px;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1050px) {
+  .top-fields,
+  .details-fields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+  .create-poll-page {
+    width: 100%;
+    max-width: 100%;
+    padding: 26px 16px 35px 0;
+  }
+
+  .page-header {
+    gap: 16px;
+    min-height: 95px;
+  }
+
+  .page-header::after {
+    inset: -26px 0 auto 0;
+  }
+
+  .header-illustration {
+    width: 72px;
+    height: 72px;
+    min-width: 72px;
+    flex-basis: 72px;
+  }
+
+  .header-illustration > mat-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 36px;
+  }
+
+  .header-illustration .header-chart {
+    right: 10px;
+    bottom: 10px;
+    font-size: 18px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+  }
+
+  .form-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 23px 18px;
+  }
+
+  .top-fields,
+  .details-fields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .option-row {
+    grid-template-columns:
+      40px
+      minmax(0, 1fr)
+      48px;
+    gap: 9px;
+  }
+
+  .remove-option {
+    width: 48px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+    min-width: 0 !important;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .create-poll-page {
+    padding-right: 10px;
+  }
+
+  .page-header {
+    gap: 12px;
+  }
+
+  .header-illustration {
+    width: 62px;
+    height: 62px;
+    min-width: 62px;
+    flex-basis: 62px;
+  }
+
+  .header-illustration > mat-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+  }
+
+  .form-card {
+    padding: 18px 14px;
+    border-radius: 13px;
+  }
+
+  .option-row {
+    grid-template-columns:
+      36px
+      minmax(0, 1fr)
+      44px;
+    gap: 7px;
+  }
+
+  .option-number {
+    height: 44px;
+  }
+
+  .remove-option {
+    width: 44px;
+    height: 44px;
+  }
+}

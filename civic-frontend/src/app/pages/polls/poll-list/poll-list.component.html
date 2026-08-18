@@ -1,0 +1,81 @@
+<div class="page-container">
+  <section class="poll-hero">
+    <div class="hero-copy">
+      <span class="eyebrow"><mat-icon>how_to_vote</mat-icon> Civic participation</span>
+      <h1>Public Polls</h1>
+      <p>Participate in community polls and view the latest results.</p>
+    </div>
+    @if (!auth.isSuperAdmin()) {
+      <button mat-raised-button class="create-poll-button" routerLink="/polls/create">
+        <mat-icon>add</mat-icon>
+        Create Poll
+      </button>
+    }
+  </section>
+
+  <section class="polls-panel">
+    <div class="panel-toolbar">
+      <span class="poll-count">{{ filteredPolls.length }} Poll(s) Available</span>
+      <mat-form-field appearance="outline" class="location-filter">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput type="text" placeholder="Search Location" [(ngModel)]="locationSearch" (input)="onLocationSearch()">
+      </mat-form-field>
+    </div>
+
+    <mat-button-toggle-group [(ngModel)]="selectedFilter" (change)="onFilterChange()" class="poll-filters" aria-label="Poll filters">
+      <mat-button-toggle value="ALL"><mat-icon>format_list_bulleted</mat-icon> All Polls</mat-button-toggle>
+      <mat-button-toggle value="ACTIVE">Active Polls</mat-button-toggle>
+      <mat-button-toggle value="MINE">My Polls</mat-button-toggle>
+      <mat-button-toggle value="CLOSED">Closed Polls</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    @if (loading) {
+      <div class="loading"><mat-spinner diameter="48"></mat-spinner></div>
+    } @else if (filteredPolls.length === 0) {
+      <div class="empty-state">
+        <mat-icon>poll</mat-icon>
+        <h2>No Polls Found</h2>
+        <p>No polls match your selected filters.</p>
+      </div>
+    } @else {
+      <div class="poll-grid">
+        @for (poll of filteredPolls; track poll.id) {
+          <mat-card class="poll-card">
+            <div class="poll-content">
+              <div class="poll-heading">
+                <div>
+                  <h2>{{ poll.title }}</h2>
+                  <p>{{ poll.description }}</p>
+                </div>
+                <button mat-icon-button class="more-button" aria-label="Poll actions"><mat-icon>more_vert</mat-icon></button>
+              </div>
+              <div class="poll-meta">
+                <span class="status" [class.status-active]="poll.status === 'ACTIVE'" [class.status-closed]="poll.status !== 'ACTIVE'">
+                  <i></i>{{ poll.status }}
+                </span>
+                <span><mat-icon>groups</mat-icon>{{ poll.totalVotes }} Votes</span>
+                <span><mat-icon>location_on</mat-icon>{{ poll.targetLocation }}</span>
+                <span><mat-icon>calendar_today</mat-icon>{{ poll.closeDate | date:'mediumDate' }}</span>
+              </div>
+              <div class="poll-actions">
+                <button mat-stroked-button class="results-button" [routerLink]="['/polls', poll.id, 'results']"><mat-icon>bar_chart</mat-icon> View Results</button>
+                @if (poll.createdByCurrentUser) {
+                  <button mat-raised-button color="primary" [routerLink]="['/polls', poll.id, 'edit']"><mat-icon>edit</mat-icon> Edit Poll</button>
+                } @else if (poll.status === 'ACTIVE' && poll.votedByCurrentUser) {
+                  <button mat-stroked-button disabled><mat-icon>check_circle</mat-icon> Already Voted</button>
+                } @else if (poll.status === 'ACTIVE' && !canVote(poll)) {
+                  <button mat-stroked-button disabled><mat-icon>lock</mat-icon> Not eligible to vote</button>
+                } @else if (poll.status === 'ACTIVE') {
+                  <button mat-raised-button color="primary" [routerLink]="['/polls', poll.id, 'vote']"><mat-icon>how_to_vote</mat-icon> Vote Now</button>
+                }
+                @if (poll.createdByCurrentUser) {
+                  <button mat-icon-button color="warn" aria-label="Delete poll" (click)="deletePoll(poll.id)"><mat-icon>delete</mat-icon></button>
+                }
+              </div>
+            </div>
+          </mat-card>
+        }
+      </div>
+    }
+  </section>
+</div>

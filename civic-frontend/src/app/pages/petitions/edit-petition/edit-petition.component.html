@@ -1,0 +1,90 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="header-icon"><mat-icon>edit_document</mat-icon></div>
+    <div class="header-content">
+      <div class="eyebrow">CIVIC ENGAGEMENT</div>
+      <h1>Edit Petition</h1>
+      <p>Update your petition details while keeping the same civic workflow.</p>
+    </div>
+  </div>
+
+  <div class="create-layout">
+    <div class="form-container">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-section">
+          <div class="section-title">
+            <div class="section-icon blue"><mat-icon>edit_document</mat-icon></div>
+            <div><h2>Petition Details</h2><p>Keep the issue clear and accurate for your community.</p></div>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Petition Title</mat-label>
+            <mat-icon matPrefix class="field-icon">title</mat-icon>
+            <input matInput formControlName="title" maxlength="200">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Describe the Issue</mat-label>
+            <mat-icon matPrefix class="field-icon textarea-icon">description</mat-icon>
+            <textarea matInput formControlName="description" rows="7" maxlength="5000"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">
+            <div class="section-icon purple"><mat-icon>category</mat-icon></div>
+            <div><h2>Classification</h2><p>Make sure your petition stays easy to route and review.</p></div>
+          </div>
+
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Category</mat-label>
+              <mat-icon matPrefix class="field-icon">category</mat-icon>
+              <mat-select formControlName="category">@for (c of categories; track c){<mat-option [value]="c">{{c}}</mat-option>}</mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Location</mat-label>
+              <mat-icon matPrefix class="field-icon">location_on</mat-icon>
+              <input matInput formControlName="location" placeholder="City, State">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">
+            <div class="section-icon green"><mat-icon>groups</mat-icon></div>
+            <div><h2>Community Support</h2><p>Adjust the signature target for this petition.</p></div>
+          </div>
+
+          <mat-form-field appearance="outline" class="goal-field">
+            <mat-label>Signature Goal</mat-label>
+            <mat-icon matPrefix class="field-icon">how_to_vote</mat-icon>
+            <input matInput type="number" formControlName="goal" min="10">
+            <span matSuffix>signatures</span>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-stroked-button class="cancel-btn" type="button" [routerLink]="['/petitions', petitionId]"><mat-icon>close</mat-icon>Cancel</button>
+          <button mat-raised-button class="publish-btn" color="primary" type="submit" [disabled]="loading || form.invalid"><mat-icon>{{ loading ? 'sync' : 'save' }}</mat-icon>{{ loading ? 'Saving...' : 'Save Changes' }}</button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="info-sidebar">
+      <div class="civic-card">
+        <div class="civic-card-top"><div class="civic-logo"><mat-icon>account_balance</mat-icon></div><div><span>CIVIX</span><strong>Keep It Current</strong></div></div>
+        <div class="civic-message"><h3>Refine Your Petition</h3><p>Update details carefully so citizens and officials see the latest information.</p></div>
+      </div>
+      <div class="guidelines-card">
+        <div class="guidelines-header"><mat-icon>verified</mat-icon><div><strong>Edit Guidelines</strong><span>Before saving</span></div></div>
+        <ul>
+          <li><mat-icon>check</mat-icon> Keep the title specific.</li>
+          <li><mat-icon>check</mat-icon> Preserve accurate location details.</li>
+          <li><mat-icon>check</mat-icon> Use a realistic signature goal.</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</div>

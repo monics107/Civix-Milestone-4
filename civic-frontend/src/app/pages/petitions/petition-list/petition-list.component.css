@@ -1,0 +1,498 @@
+/* ================================
+   PAGE
+================================ */
+
+.page-container {
+  min-height: 100%;
+  background: #f5f7fb;
+}
+
+
+/* ================================
+   FILTER CARD
+================================ */
+
+.filter-card {
+  margin: 24px 0 28px;
+  padding: 22px 26px;
+  background: #ffffff;
+  border: 1px solid #e7edf5;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.filter-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+
+/* ================================
+   TABS
+================================ */
+
+.petition-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.petition-tabs button {
+  min-width: 105px;
+  height: 42px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 11px;
+
+  background: transparent;
+  color: #64748b;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.petition-tabs button:hover {
+  background: #f1f5f9;
+  color: #2563eb;
+}
+
+.petition-tabs button.active {
+  background: #eef5ff;
+  color: #1565c0;
+}
+
+
+/* ================================
+   FILTERS
+================================ */
+
+.top-filters {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.small-filter {
+  width: 160px;
+  margin: 0;
+}
+
+.small-filter .mat-mdc-text-field-wrapper {
+  border-radius: 12px !important;
+  background: #ffffff;
+}
+
+.small-filter .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+
+/* ================================
+   PETITION LIST
+================================ */
+
+.list-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 0;
+  background: transparent;
+}
+
+
+/* ================================
+   PETITION CARD
+================================ */
+
+.petition-row {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 28px;
+  padding: 22px 24px;
+
+  background: #ffffff;
+  border: 1px solid #e5ebf3;
+  border-radius: 18px;
+
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.045);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.petition-row:hover {
+  transform: translateY(-2px);
+
+  border-color: #bfdbfe;
+
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.09);
+}
+
+
+/* ================================
+   MAIN CONTENT
+================================ */
+
+.petition-main {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.petition-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+
+/* ================================
+   BADGES
+================================ */
+
+.badge,
+.cat-badge {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 28px;
+  padding: 5px 12px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.badge.active,
+.badge.approved {
+  background: #eaf7ee;
+  color: #238b45;
+}
+
+.badge.under_review {
+  background: #fff7df;
+  color: #d97706;
+}
+
+.badge.rejected {
+  background: #ffeded;
+  color: #dc2626;
+}
+
+.badge.closed {
+  background: #eef1f4;
+  color: #64748b;
+}
+
+.cat-badge {
+  background: #eef2ff;
+  color: #4f46b5;
+}
+
+
+/* ================================
+   TITLE
+================================ */
+
+.petition-main h3 {
+  margin: 0 0 9px;
+
+  color: #172033;
+
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.35;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ================================
+   DESCRIPTION
+================================ */
+
+.petition-main p {
+  display: -webkit-box;
+
+  margin: 0 0 16px;
+
+  color: #667085;
+
+  font-size: 14px;
+  line-height: 1.65;
+
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+
+/* ================================
+   META INFORMATION
+================================ */
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 20px;
+
+  color: #64748b;
+  font-size: 13px;
+}
+
+.meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta mat-icon {
+  width: 17px;
+  height: 17px;
+
+  color: #2563eb;
+  font-size: 17px;
+}
+
+
+/* ================================
+   RIGHT SIDE
+================================ */
+
+.petition-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+
+/* ================================
+   VOTE COUNT
+================================ */
+
+.vote-count {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  min-width: 108px;
+  padding: 10px 13px;
+
+  background: #f5f9ff;
+
+  border: 1px solid #dceaff;
+  border-radius: 13px;
+}
+
+.vote-count mat-icon {
+  color: #2563eb;
+  font-size: 21px;
+}
+
+.vote-count div {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.vote-count strong {
+  color: #174ea6;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.vote-count span {
+  margin-top: 3px;
+
+  color: #6b83a7;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+/* ================================
+   ACTIONS
+================================ */
+
+.petition-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  min-width: 115px;
+}
+
+.petition-actions button {
+  width: 100%;
+  min-height: 38px;
+
+  border-radius: 9px;
+}
+
+.petition-actions .mat-mdc-raised-button.mat-warn {
+  background: #e53935 !important;
+  color: #ffffff;
+}
+
+
+/* ================================
+   EMPTY STATE
+================================ */
+
+.empty-state {
+  padding: 65px 20px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e5ebf3;
+  border-radius: 18px;
+
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.empty-state mat-icon {
+  width: 58px;
+  height: 58px;
+
+  margin-bottom: 14px;
+
+  color: #2563eb;
+  font-size: 58px;
+}
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 992px) {
+
+  .filter-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .top-filters {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .small-filter {
+    width: 180px;
+  }
+
+  .petition-row {
+    flex-direction: column;
+  }
+
+  .petition-side {
+    width: 100%;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 768px) {
+
+  .filter-card {
+    margin: 18px 0 22px;
+    padding: 18px;
+    border-radius: 15px;
+  }
+
+  .petition-tabs {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .petition-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .petition-tabs button {
+    min-width: 110px;
+  }
+
+  .top-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .small-filter {
+    width: 100%;
+  }
+
+  .petition-row {
+    padding: 18px;
+    gap: 18px;
+    border-radius: 15px;
+  }
+
+  .petition-main h3 {
+    font-size: 19px;
+    white-space: normal;
+  }
+
+  .petition-main p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .petition-side {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .vote-count {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .petition-actions {
+    width: 100%;
+  }
+}

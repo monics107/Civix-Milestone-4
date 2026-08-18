@@ -1,0 +1,107 @@
+<div class="create-poll-page">
+  <header class="page-header">
+    <div class="header-illustration" aria-hidden="true">
+      <mat-icon>assignment</mat-icon>
+      <mat-icon class="header-chart">bar_chart</mat-icon>
+    </div>
+    <div>
+      <h1>{{ editingPollId ? 'Edit Poll' : 'Create a New Poll' }}</h1>
+      <p>{{ editingPollId ? 'Update your poll details while keeping the same page experience.' : 'Create a poll to gather community feedback.' }}</p>
+    </div>
+  </header>
+
+  <section class="form-card">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="top-fields">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Poll Question</mat-label>
+          <input matInput formControlName="title" placeholder="Enter your poll question">
+          @if (form.controls.title.touched && form.controls.title.invalid) {
+            <mat-error>Enter at least 5 characters.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Target Location</mat-label>
+          <mat-icon matPrefix>location_on</mat-icon>
+          <input matInput formControlName="targetLocation" placeholder="Enter location">
+          @if (form.controls.targetLocation.touched && form.controls.targetLocation.invalid) {
+            <mat-error>Location is required.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field class="description-field" appearance="outline" floatLabel="always">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="4" formControlName="description" placeholder="Provide more details about your poll"></textarea>
+        @if (form.controls.description.touched && form.controls.description.invalid) {
+          <mat-error>A description is required.</mat-error>
+        }
+      </mat-form-field>
+
+      <section class="options-section">
+        <div class="section-heading">
+          <span class="section-icon"><mat-icon>format_list_bulleted</mat-icon></span>
+          <div>
+            <h2>Poll Options</h2>
+            <p>Add at least two options for people to choose from.</p>
+          </div>
+        </div>
+
+        <div class="option-list">
+          @for (opt of options.controls; track $index) {
+            <div class="option-row">
+              <span class="option-number">{{ $index + 1 }}</span>
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Option {{ $index + 1 }}</mat-label>
+                <input matInput [formControl]="$any(opt)" placeholder="Enter option">
+              </mat-form-field>
+              <button mat-icon-button class="remove-option" type="button" aria-label="Remove option"
+                (click)="removeOption($index)" [disabled]="options.length <= 2">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+
+        <button mat-stroked-button class="add-option" type="button" (click)="addOption()">
+          <mat-icon>add</mat-icon>
+          Add Another Option
+        </button>
+      </section>
+
+      <div class="details-fields">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Department</mat-label>
+          <mat-select formControlName="department">
+            @for (department of departments; track department.id) {
+              <mat-option [value]="department.name">{{ department.name }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.department.touched && form.controls.department.invalid) {
+            <mat-error>Select a department.</mat-error>
+          }
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="endDate" placeholder="Select end date">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (form.controls.endDate.touched && form.controls.endDate.invalid) {
+            <mat-error>Select an end date.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-button type="button" routerLink="/polls">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loading || form.invalid">
+          <mat-icon>{{ loading ? 'sync' : 'send' }}</mat-icon>
+          {{ loading ? (editingPollId ? 'Saving...' : 'Creating...') : (editingPollId ? 'Save Changes' : 'Create Poll') }}
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

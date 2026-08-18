@@ -1,0 +1,74 @@
+<mat-toolbar class="navbar">
+
+  <button class="menu-toggle" mat-icon-button (click)="toggleSidenav.emit()"><mat-icon>menu</mat-icon></button>
+  <form class="search-box" (ngSubmit)="search()">
+    <mat-icon>search</mat-icon>
+    <input [(ngModel)]="searchTerm" name="globalSearch" type="search" aria-label="Search petitions, polls, and officials" placeholder="Search petitions, polls, officials...">
+  </form>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button class="notification-btn" [matMenuTriggerFor]="notificationMenu" aria-label="Open notifications">
+    <mat-icon>notifications_none</mat-icon>
+    @if (unreadNotifications) { <span class="notification-count">{{ unreadNotifications }}</span> }
+  </button>
+
+  <mat-menu #notificationMenu="matMenu" class="notification-panel">
+    <div class="notification-header" (click)="$event.stopPropagation()">
+      <strong>Notifications</strong>
+      <span class="notification-new">{{ unreadNotifications }} new</span>
+    </div>
+    @for (notification of notifications; track notification.id) {
+      <button mat-menu-item class="notification-item" (click)="openNotification(notification)">
+        <mat-icon>notifications</mat-icon>
+        <span><strong>{{ notification.title }}</strong><small>{{ notification.message }}</small></span>
+      </button>
+    }
+    @if (!notifications.length) { <div class="notification-item empty-notifications">No new notifications</div> }
+  </mat-menu>
+
+  <button type="button" [matMenuTriggerFor]="userMenu" class="user-btn">
+
+    <span class="top-avatar"><span>{{ user?.name?.charAt(0) || 'U' }}</span></span>
+    <span class="user-name"><strong>{{ user?.name || 'User' }}</strong><small>{{ user?.role === 'OFFICIAL' ? 'Official' : 'Citizen' }}</small></span>
+    <mat-icon>keyboard_arrow_down</mat-icon>
+
+  </button>
+
+  <mat-menu #userMenu="matMenu" class="profile-panel">
+
+    <div class="menu-user-info">
+
+      <strong>{{ user?.name }}</strong>
+
+      <small>{{ user?.email }}</small>
+
+      <small>{{ user?.role }}</small>
+
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <button
+      mat-menu-item
+      routerLink="/settings">
+
+      <mat-icon>settings</mat-icon>
+
+      Settings
+
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-menu-item class="logout-menu-item" (click)="logout()">
+
+      <mat-icon>logout</mat-icon>
+
+      Logout
+
+    </button>
+
+  </mat-menu>
+
+</mat-toolbar>

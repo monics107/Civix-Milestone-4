@@ -1,0 +1,49 @@
+<div class="poll-results-page">
+  <header class="analytics-hero">
+    <button mat-stroked-button class="back-btn" routerLink="/polls"><mat-icon>arrow_back</mat-icon> Back to Polls</button>
+    <div class="hero-title">
+      <span class="hero-icon"><mat-icon>query_stats</mat-icon></span>
+      <div><h1>Poll Results &amp; Analytics</h1><p>Live voting results update automatically every 10 seconds.</p></div>
+    </div>
+    <div class="hero-art" aria-hidden="true"><mat-icon>pie_chart</mat-icon><mat-icon>bar_chart</mat-icon><mat-icon>show_chart</mat-icon></div>
+  </header>
+
+  <section class="stats-grid" aria-label="Poll statistics">
+    <mat-card class="stat-card blue"><span class="stat-icon"><mat-icon>bar_chart</mat-icon></span><div><strong>{{ stats?.totalPolls ?? 0 }}</strong><span>Total Polls</span></div></mat-card>
+    <mat-card class="stat-card green"><span class="stat-icon"><mat-icon>groups</mat-icon></span><div><strong>{{ stats?.totalVotes ?? 0 }}</strong><span>Total Voters</span></div></mat-card>
+    <mat-card class="stat-card orange"><span class="stat-icon"><mat-icon>pending_actions</mat-icon></span><div><strong>{{ stats?.activePolls ?? 0 }}</strong><span>Active Polls</span></div></mat-card>
+    <mat-card class="stat-card purple"><span class="stat-icon"><mat-icon>task_alt</mat-icon></span><div><strong>{{ stats?.closedPolls ?? 0 }}</strong><span>Closed Polls</span></div></mat-card>
+  </section>
+
+  @if (polls.length) {
+    <mat-card class="selector-card">
+      <div class="section-title"><span class="section-icon"><mat-icon>format_list_bulleted</mat-icon></span><div><h2>Select Poll</h2><p>Choose any active or closed poll to see its live results.</p></div></div>
+      <mat-form-field appearance="outline" class="poll-selector"><mat-label>Select Poll</mat-label><mat-select [(ngModel)]="selectedPollId" (selectionChange)="onPollSelect($event.value)">@for (poll of polls; track poll.id) { <mat-option [value]="poll.id">{{ poll.title }} ({{ poll.status }})</mat-option> }</mat-select></mat-form-field>
+    </mat-card>
+  }
+
+  @if (isLoading) { <div class="loading-state"><mat-spinner diameter="48"></mat-spinner><h3>Loading results...</h3></div> }
+  @if (errorMsg && !isLoading) { <div class="error-banner"><mat-icon>error_outline</mat-icon><span>{{ errorMsg }}</span><button mat-raised-button color="primary" (click)="loadPollsList()">Retry</button></div> }
+  @if (!isLoading && !errorMsg && polls.length === 0) { <div class="empty-state"><mat-icon>poll</mat-icon><h2>No Polls Available</h2><p>Create a poll to start collecting votes.</p><button mat-raised-button color="primary" routerLink="/polls/create">Create Poll</button></div> }
+
+  @if (!isLoading && pollResult) {
+    <section class="results-card">
+      <div class="results-header"><span class="result-icon"><mat-icon>bar_chart</mat-icon></span><h2>{{ pollResult.title }}</h2><span class="status-badge" [ngClass]="pollResult.status.toLowerCase()"><i></i>{{ pollResult.status }}</span></div>
+      <div class="results-body">
+        <div class="vote-ring"><div><strong>{{ pollResult.totalVotes }}</strong><span>Total Votes</span></div></div>
+        <div class="option-results">
+          @for (item of pollResult.results; track item.option; let index = $index) {
+            <div class="option-result" [class.option-two]="index % 2 === 1"><span class="option-letter">{{ index + 1 }}</span><div class="option-progress"><div><strong>{{ item.option }}</strong><span>{{ item.votes }} {{ item.votes === 1 ? 'Vote' : 'Votes' }}</span></div><mat-progress-bar mode="determinate" [value]="item.percentage"></mat-progress-bar></div><b>{{ item.percentage }}%</b></div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="charts-container">
+      <mat-card class="chart-card"><div class="chart-header"><span class="chart-icon"><mat-icon>bar_chart</mat-icon></span><div><h2>Votes by Option</h2><p>Overview of votes received for each option.</p></div></div><div class="chart-content"><canvas #barCanvas></canvas></div></mat-card>
+      <mat-card class="chart-card"><div class="chart-header"><span class="chart-icon"><mat-icon>pie_chart</mat-icon></span><div><h2>Votes Distribution</h2><p>Visual representation of votes distribution.</p></div></div><div class="chart-content"><canvas #pieCanvas></canvas></div></mat-card>
+    </section>
+
+    <mat-card class="poll-info-card"><div class="refresh-note"><span class="info-icon"><mat-icon>info</mat-icon></span><strong>Results refresh automatically while this page is open.</strong></div><div class="poll-info-grid"><div><span class="mini-icon blue"><mat-icon>description</mat-icon></span><p>Poll ID<strong>{{ pollResult.pollId }}</strong></p></div><div><span class="mini-icon green"><mat-icon>monitor_heart</mat-icon></span><p>Status<strong>{{ pollResult.status }}</strong></p></div><div><span class="mini-icon purple"><mat-icon>format_list_bulleted</mat-icon></span><p>Options<strong>{{ pollResult.results.length }}</strong></p></div><div><span class="mini-icon orange"><mat-icon>groups</mat-icon></span><p>Total Votes<strong>{{ pollResult.totalVotes }}</strong></p></div></div></mat-card>
+  }
+</div>
